@@ -1,28 +1,24 @@
+import pygame
 import sys
 from time import sleep
-
-import json
+from scoreboard import Scoreboard
+from settings import Settings
 
 import pygame
 from bullet import Bullet
 from alien import Alien
-from game_stats import GameStats
 
 
-def check_keydown_events(event, ai_settings, screen, ship, bullets):
+def check_keydown_events(event, ai_settings, screen, ship, bullets, stats):
     """Respond to keypresses."""
-    stats = GameStats(ai_settings)
-    high_score_file = 'high_score.txt'
     if event.key == pygame.K_RIGHT:
         ship.moving_right = True
     elif event.key == pygame.K_LEFT:
         ship.moving_left = True
     elif event.key == pygame.K_SPACE:
         fire_bullet(ai_settings, screen, ship, bullets)
-    elif event.key == pygame.K_q:
-        with open(high_score_file, 'w') as hs_file:  # here trying to create a file for the high score
-            hs_file.write(str(stats.high_score))
-        sys.exit()
+    elif event.key == pygame.K_q:   # This 'pygame.K_q' means to exit the application through the 'q' key
+        quit_game(stats)
             
             
 def fire_bullet(ai_settings, screen, ship, bullets):
@@ -39,17 +35,28 @@ def check_keyup_events(event, ship):
         ship.moving_right = False
     elif event.key == pygame.K_LEFT:
         ship.moving_left = False
-        
-        
+
+
+def quit_game(stats):
+    """Save the score if it's a new high score and exit the game"""
+    sett = Settings()
+    screen = pygame.display.set_mode(
+        (sett.screen_width, sett.screen_height))
+    sb = Scoreboard(sett, screen, stats)
+    high_score_file = 'high_score.txt'
+    with open(high_score_file, 'w') as hs_file:
+        check_high_score(stats, sb)
+        hs_file.write(str(stats.high_score))
+        sys.exit()
+
+
 def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets):
     """Respond to keypresses and mouse events."""
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            with open(high_score_file, 'w') as hs_file:  # here trying to create a file for the high score
-                hs_file.write(str(stats.high_score))
-            sys.exit()
+        if event.type == pygame.QUIT:   # this 'pygame.QUIT' means to exit the application through the 'x' at the corner
+            quit_game(stats)
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, ai_settings, screen, ship, bullets)
+            check_keydown_events(event, ai_settings, screen, ship, bullets, stats)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
         elif event.type == pygame.MOUSEBUTTONDOWN:
