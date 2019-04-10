@@ -22,6 +22,7 @@ class Settings():
 
         # How quickly the game speeds up
         self.speedup_scale = 1.1
+
         # How quickly the alien points values increase
         self.score_scale = 1.5
 
