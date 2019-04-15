@@ -1,3 +1,7 @@
+import pygame
+from pygame.sprite import Sprite
+
+
 class Settings():
     """A class to store all settings for Alien Invasion."""
 
@@ -7,6 +11,8 @@ class Settings():
         self.screen_width = 1200
         self.screen_height = 800
         self.bg_color = (15, 0, 60)
+        self.background = pygame.image.load('images/stars.png')
+        self.rect = self.background.get_rect()
         
         # Ship settings
         self.ship_limit = 3
