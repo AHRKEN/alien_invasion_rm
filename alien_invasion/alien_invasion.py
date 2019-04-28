@@ -15,6 +15,7 @@ def run_game():
     ai_settings = Settings()
     screen = pygame.display.set_mode(
         (ai_settings.screen_width, ai_settings.screen_height))
+    fps = pygame.time.Clock()
     pygame.display.set_caption("Alien Invasion")
 
     # Make the 'Play' button
@@ -39,6 +40,7 @@ def run_game():
     while True:
         gf.check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets)
         if stats.game_active:
+            fps.tick(60)     # This should set the frames per second (fps) to 60.....
             ship.update()
             gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets)
             gf.update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets)
