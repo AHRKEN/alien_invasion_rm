@@ -16,6 +16,8 @@ def run_game():
     screen = pygame.display.set_mode(
         (ai_settings.screen_width, ai_settings.screen_height))
     fps = pygame.time.Clock()
+    pygame.mixer.music.load('sounds/battle_lines.mp3')     # As it says, this set the music, but it doesnt play it.....
+    pygame.mixer.music.play()     # This line play the bg music.....
     pygame.display.set_caption("Alien Invasion")
 
     # Make the 'Play' button
