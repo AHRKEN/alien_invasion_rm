@@ -4,7 +4,7 @@ import pygame.font
 class Button():
     """A class for the 'Start' button"""
 
-    def __init__(self, ai_settings, screen, msg):
+    def __init__(self, screen, msg):
         """Initialize button atributes"""
         self.screen = screen
         self.screen_rect = screen.get_rect()
