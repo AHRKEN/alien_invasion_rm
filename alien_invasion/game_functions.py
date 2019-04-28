@@ -15,9 +15,7 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets, stats):
     elif event.key == pygame.K_LEFT:
         ship.moving_left = True
     elif event.key == pygame.K_SPACE:
-        bullet_sound = pygame.mixer.Sound('sounds/sfx_laser1.wav')     # This line set the sfx when a bullet is shoot...
         fire_bullet(ai_settings, screen, ship, bullets)
-        bullet_sound.play()     # This line plays the sfx of the bullet.....
     elif event.key == pygame.K_q:   # This 'pygame.K_q' means to exit the application through the 'q' key
         quit_game(stats)
             
@@ -28,6 +26,7 @@ def fire_bullet(ai_settings, screen, ship, bullets):
     if len(bullets) < ai_settings.bullets_allowed:
         new_bullet = Bullet(ai_settings, screen, ship)
         bullets.add(new_bullet)
+        bullet_sfx()
         
         
 def check_keyup_events(event, ship):
@@ -78,6 +77,9 @@ def check_play_button(ai_settings, screen, stats, sb, play_button, ship, aliens,
         # Reset game statistics
         stats.reset_stats()
         stats.game_active = True
+
+        # Play music.
+        play_music()     # Here, the background music begins, after the "start" button is pressed.....
 
         # Reset the scoreboard images
         sb.prep_score()
@@ -143,6 +145,7 @@ def check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship, aliens, 
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
 
     if collisions:
+        explosion_sfx()
         for aliens in collisions.values():
             stats.score += ai_settings.alien_points * len(aliens)
             sb.prep_score()
@@ -265,3 +268,24 @@ def check_high_score(stats, sb):
     if stats.score > stats.high_score:
         stats.high_score = stats.score
         sb.prep_high_score()
+
+
+def play_music():
+    """Set the background music and its volume."""
+    pygame.mixer.music.load('sounds/battle_lines.mp3')  # As it says, this set the music, but it doesnt play it.....
+    pygame.mixer.music.set_volume(.5)
+    pygame.mixer.music.play(-1)  # This line play the bg music, and the (-1) argument should replay the song....
+
+
+def bullet_sfx():
+    """Set the sfx when a bullet is shot."""
+    bullet_sound = pygame.mixer.Sound('sounds/sfx_laser1.wav')  # This line set the sfx when a bullet is shoot...
+    bullet_sound.set_volume(.5)
+    bullet_sound.play()  # This line plays the sfx of the bullet.....
+
+
+def explosion_sfx():
+    """Set an explosion sfx when a bullet hit a target."""
+    explosion_sound = pygame.mixer.Sound('sounds/explosion_sfx.wav')
+    explosion_sound.set_volume(.5)
+    explosion_sound.play()

@@ -10,24 +10,20 @@ import game_functions as gf
 
 
 def run_game():
-    # Initialize pygame, settings, and screen object.
+    # Initialize pygame, settings, screen, and frame rate object.
     pygame.init()
     ai_settings = Settings()
-    screen = pygame.display.set_mode(
-        (ai_settings.screen_width, ai_settings.screen_height))
+    screen = pygame.display.set_mode((ai_settings.screen_width, ai_settings.screen_height))
     fps = pygame.time.Clock()
-    pygame.mixer.music.load('sounds/battle_lines.mp3')     # As it says, this set the music, but it doesnt play it.....
-    pygame.mixer.music.set_volume(.5)
-    pygame.mixer.music.play(-1)     # This line play the bg music, and the (-1) argument should replay the song.....
-    pygame.display.set_caption("Alien Invasion")
 
+    pygame.display.set_caption("Alien Invasion")
     # Make the 'Play' button
-    play_button = Button(ai_settings, screen, "Play")
+    play_button = Button(screen, "Play")
 
     # Create an instance to store game statistics and create a scoreboard
     stats = GameStats(ai_settings)
     sb = Scoreboard(ai_settings, screen, stats)
-    
+
     # Set the background color.
     bg_color = (230, 230, 230)
     
@@ -42,8 +38,8 @@ def run_game():
     # Start the main loop for the game.
     while True:
         gf.check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets)
+        fps.tick(60)  # This should set the frames per second (fps) to 60.....
         if stats.game_active:
-            fps.tick(60)     # This should set the frames per second (fps) to 60.....
             ship.update()
             gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets)
             gf.update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets)
