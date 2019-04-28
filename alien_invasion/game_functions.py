@@ -1,4 +1,3 @@
-import pygame
 import sys
 from time import sleep
 from scoreboard import Scoreboard
@@ -16,7 +15,9 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets, stats):
     elif event.key == pygame.K_LEFT:
         ship.moving_left = True
     elif event.key == pygame.K_SPACE:
+        bullet_sound = pygame.mixer.Sound('sounds/sfx_laser1.wav')     # This line set the sfx when a bullet is shoot...
         fire_bullet(ai_settings, screen, ship, bullets)
+        bullet_sound.play()     # This line plays the sfx of the bullet.....
     elif event.key == pygame.K_q:   # This 'pygame.K_q' means to exit the application through the 'q' key
         quit_game(stats)
             

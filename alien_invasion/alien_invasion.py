@@ -17,7 +17,7 @@ def run_game():
         (ai_settings.screen_width, ai_settings.screen_height))
     fps = pygame.time.Clock()
     pygame.mixer.music.load('sounds/battle_lines.mp3')     # As it says, this set the music, but it doesnt play it.....
-    pygame.mixer.music.set_volume(1)
+    pygame.mixer.music.set_volume(.5)
     pygame.mixer.music.play(-1)     # This line play the bg music, and the (-1) argument should replay the song.....
     pygame.display.set_caption("Alien Invasion")
 
