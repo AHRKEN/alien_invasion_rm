@@ -15,15 +15,15 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets, stats):
     elif event.key == pygame.K_LEFT:
         ship.moving_left = True
     elif event.key == pygame.K_SPACE:
-        fire_bullet(ai_settings, screen, ship, bullets)
+        fire_bullet(ai_settings, screen, ship, bullets, stats)
     elif event.key == pygame.K_q:   # This 'pygame.K_q' means to exit the application through the 'q' key
         quit_game(stats)
             
             
-def fire_bullet(ai_settings, screen, ship, bullets):
+def fire_bullet(ai_settings, screen, ship, bullets, stats):
     """Fire bullet if limit not reached yet"""
     # Create a new bullet and add it to the bullets group.
-    if len(bullets) < ai_settings.bullets_allowed:
+    if stats.game_active == 1 and len(bullets) < ai_settings.bullets_allowed:
         new_bullet = Bullet(ai_settings, screen, ship)
         bullets.add(new_bullet)
         bullet_sfx()
