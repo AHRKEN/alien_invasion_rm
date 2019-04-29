@@ -28,6 +28,20 @@ def check_keyup_events(event, ship):
         ship.moving_left = False
 
 
+def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets):
+    """Respond to keypresses and mouse events."""
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:   # this 'pygame.QUIT' means to exit the application through the 'x' at the corner
+            quit_game(stats)
+        elif event.type == pygame.KEYDOWN:
+            check_keydown_events(event, ai_settings, screen, ship, bullets, stats)
+        elif event.type == pygame.KEYUP:
+            check_keyup_events(event, ship)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            check_play_button(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets, mouse_x, mouse_y)
+
+
 def fire_bullet(ai_settings, screen, ship, bullets, stats):
     """Fire bullet if limit not reached yet"""
     # Create a new bullet and add it to the bullets group.
@@ -48,20 +62,6 @@ def quit_game(stats):
         check_high_score(stats, sb)
         hs_file.write(str(stats.high_score))
         sys.exit()
-
-
-def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets):
-    """Respond to keypresses and mouse events."""
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:   # this 'pygame.QUIT' means to exit the application through the 'x' at the corner
-            quit_game(stats)
-        elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, ai_settings, screen, ship, bullets, stats)
-        elif event.type == pygame.KEYUP:
-            check_keyup_events(event, ship)
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            mouse_x, mouse_y = pygame.mouse.get_pos()
-            check_play_button(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets, mouse_x, mouse_y)
 
 
 def check_play_button(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets, mouse_x, mouse_y):
