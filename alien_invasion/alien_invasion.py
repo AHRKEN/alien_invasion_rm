@@ -12,6 +12,7 @@ import game_functions as gf
 def run_game():
     # Initialize pygame, settings, screen, and frame rate object.
     pygame.init()
+    pygame.mixer.init()
     ai_settings = Settings()
     screen = pygame.display.set_mode((ai_settings.screen_width, ai_settings.screen_height))
     fps = pygame.time.Clock()
