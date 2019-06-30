@@ -51,15 +51,11 @@ def fire_bullet(ai_settings, screen, ship, bullets, stats):
         bullet_sfx()
 
 
-def quit_game(stats):
+def quit_game(screen, stats, sb):
     """Save the score if it's a new high score and exit the game"""
-    sett = Settings()
-    screen = pygame.display.set_mode(
-        (sett.screen_width, sett.screen_height))
-    sb = Scoreboard(sett, screen, stats)
     high_score_file = 'high_score.txt'
+    check_high_score(stats, sb)
     with open(high_score_file, 'w') as hs_file:
-        check_high_score(stats, sb)
         hs_file.write(str(stats.high_score))
         sys.exit()
 

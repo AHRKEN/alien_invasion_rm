@@ -13,6 +13,7 @@ class GameStats():
         self.game_active = False
 
         # High score should never be reset
+        self.high_score = 0
         high_score_file = 'high_score.txt'
         try:
             with open(high_score_file) as hs_file:
